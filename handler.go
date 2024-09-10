@@ -34,3 +34,40 @@ func GetAlbumbById(context *gin.Context) {
 	}
 	context.IndentedJSON(404, gin.H{"error": "albumb not found"})
 }
+
+func DeleAlbumbById(context *gin.Context) {
+	id := context.Param("id")
+	ID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		context.IndentedJSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	for i, albumb := range Albumbs {
+		if albumb.Id == int(ID) {
+			Albumbs = append(Albumbs[:i], Albumbs[i+1:]...)
+			context.IndentedJSON(200, gin.H{"message": "albumb deleted"})
+			return
+		}
+	}
+}
+
+func UpdateAlbumbById(context *gin.Context) {
+	id := context.Param("id")
+	ID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		context.IndentedJSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	for i, albumb := range Albumbs {
+		if albumb.Id == int(ID) {
+			var albumb Albumb
+			if err := context.BindJSON(&albumb); err != nil {
+				context.IndentedJSON(400, gin.H{"error": err.Error()})
+				return
+			}
+			Albumbs[i] = albumb
+			context.IndentedJSON(200, albumb)
+			return
+		}
+	}
+}
