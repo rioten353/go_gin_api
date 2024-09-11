@@ -12,6 +12,10 @@ go mod tidy
 
 go run .
 
+##OR
+
+./main
+
 
 #Curl
 

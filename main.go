@@ -8,7 +8,7 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.GET("/albumbs", GetAlbumbs)
+	router.GET("/", GetAlbumbs)
 	router.GET("/albumbs/:id", GetAlbumbById)
 	router.POST("/albumbs", PostAlbumb)
 	router.PUT("/albumbs/:id", UpdateAlbumbById)
